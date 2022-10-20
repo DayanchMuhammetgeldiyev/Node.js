@@ -11,7 +11,7 @@ function logWithId(msg) {
 let idSeq = 0;
 
 http.createServer((req, res) => {
-    asyncLocalStorage.run(idSeq++, () => {
+    asyncLocalStorage.enterWith(idSeq++, () => {
         logWithId('start');
         setImmediate(() => {
             logWithId('finished');
