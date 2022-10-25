@@ -15,8 +15,8 @@ import { Buffer } from "node:buffer"
 // console.log(buf6);
 
 
-const buf = Buffer.from('hello world', 'utf8');
-console.log(buf.toString('hex'))
+// const buf = Buffer.from('hello world', 'utf8');
+// console.log(buf.toString('hex'))
 
 // Create buffer length 10 number
 
@@ -28,3 +28,15 @@ console.log(buf.toString('hex'))
 
 // 'latin1': Latin - 1 stands for ISO - 8859 - 1. This character encoding only supports the Unicode characters from U + 0000 to U + 00FF.Each character is encoded using a single byte.Characters that do not fit into that range are truncated and will be mapped to characters in that range.
 
+
+
+// const buf = Buffer.from("hello", "utf16le");
+// const uint16array = new Uint16Array(
+//     buf.buffer,
+//     buf.byteOffset,
+//     buf.length / Uint16Array.BYTES_PER_ELEMENT
+// );
+
+// console.log(uint16array)
+
+// Prints: Uint16Array(5) [ 104, 101, 108, 108, 111 ]
