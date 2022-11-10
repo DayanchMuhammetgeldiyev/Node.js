@@ -4,6 +4,9 @@ import path from "node:path";
 import Express  from "express";
 import swig from "swig"
 const app = Express();
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
 
 class Server {
   constructor() {
@@ -21,7 +24,7 @@ class Server {
 
  initViewEngine() {
     app.engine('html', swig.renderFile);
-    app.set('views', path.join(__dirname, 'views', "index.html"));
+    app.set('views', path.join(__filename, 'views', "index.html"));
     app.set('view engine', 'html');
   }
 }
