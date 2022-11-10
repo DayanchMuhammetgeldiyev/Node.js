@@ -1,31 +1,39 @@
-
-import http from "node:http";
-import path from "node:path";
-import Express  from "express";
-import swig from "swig"
-const app = Express();
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const swig = require('swig');
+const port = 8001;
+const app = express();
 
 class Server {
-  constructor() {
-    this.start();
-    this.initViewEngine();
-  }
-  start() {
-    http
-      .createServer(function (req, res) {
-        res.write("Hello adasda!");
-        res.end();
-      })
-      .listen(3000);
-  }
- initViewEngine() {
-    app.engine('html', swig.renderFile);
-    app.set('views', path.join(__filename, 'views', "index.html"));
-    app.set('view engine', 'html');
-  }
+
+    constructor() {
+        this.initViewEngine();
+        this.initExpressMiddleware();
+        this.initRoutes();
+        this.start();
+    }
+
+    start() {
+        app.listen(port, () =>
+            console.log('app listening on port ' + port));
+    }
+
+    initViewEngine() {
+        app.engine('html', swig.renderFile);
+        app.set('views', path.join(__dirname, 'views'));
+        app.set('view engine', 'html');
+    }
+
+    initExpressMiddleware() {
+        app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({ extended: false }));
+    }
+
+    initRoutes() {
+        app.get('/', (req, res) =>
+            res.render('index.html'));
+    }
 }
 
-new Server()
+new Server();
