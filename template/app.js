@@ -21,7 +21,6 @@ class Server {
       })
       .listen(3000);
   }
-
  initViewEngine() {
     app.engine('html', swig.renderFile);
     app.set('views', path.join(__filename, 'views', "index.html"));
