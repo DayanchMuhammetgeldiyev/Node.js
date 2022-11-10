@@ -1,11 +1,14 @@
-import connection from "./db/db.js";
-import http from "node:http";
 
+import http from "node:http";
+import path from "node:path";
+import Express  from "express";
+import swig from "swig"
+const app = Express();
 
 class Server {
   constructor() {
     this.start();
-    this.dbconnect();
+    this.initViewEngine();
   }
   start() {
     http
@@ -15,9 +18,12 @@ class Server {
       })
       .listen(3000);
   }
-  dbconnect(){
-    connection.connect();
- }
+
+ initViewEngine() {
+    app.engine('html', swig.renderFile);
+    app.set('views', path.join(__dirname, 'views', "index.html"));
+    app.set('view engine', 'html');
+  }
 }
 
 new Server()
