@@ -1,28 +1,29 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const swig = require('swig');
+import express from 'express';
+import path from 'path';
+import bodyParser from 'body-parser';
+import { fileURLToPath } from 'url';
 const port = 8001;
 const app = express();
 
-class Server {
+const __filename = fileURLToPath(import.meta.url);
 
+
+class Server {
     constructor() {
         this.initViewEngine();
         this.initExpressMiddleware();
         this.initRoutes();
         this.start();
     }
-
     start() {
         app.listen(port, () =>
             console.log('app listening on port ' + port));
     }
 
     initViewEngine() {
-        app.engine('html', swig.renderFile);
-        app.set('views', path.join(__dirname, 'views'));
-        app.set('view engine', 'html');
+        app.engine('html', Handlebars.renderFile);
+        app.set('views', path.dirname(__filename, 'views'));
+        app.set('view engine', 'handlebars');
     }
 
     initExpressMiddleware() {
@@ -32,7 +33,7 @@ class Server {
 
     initRoutes() {
         app.get('/', (req, res) =>
-            res.render('index.html'));
+            res.render('index'));
     }
 }
 
